@@ -5,10 +5,10 @@ Key Features:
 Implemented data preprocessing using NumPy and Pandas to handle missing values, encode categorical data, and normalize numerical features.
 Trained multiple regression models and finalized the Random Forest Regressor for its superior performance and accuracy.
 Evaluated model performance using R² score and Mean Absolute Error (MAE).
-Deployed the trained model using Flask, creating an interactive web interface for users to input laptop specs and get an instant price prediction.
+Deployed the trained model using Streamlit, creating an interactive web interface for users to input laptop specs and get an instant price prediction.
 Tech Stack:
 Languages: Python
-Libraries: NumPy, Pandas, Scikit-learn, Flask
+Libraries: NumPy, Pandas, Scikit-learn, Streamlit
 Tools: VS Code, Git, GitHub
 Outcome:
-The project demonstrates end-to-end machine learning workflow — from data preprocessing, model building, and evaluation to web deployment, simulating a real-world
+The project demonstrates end-to-end machine learning workflow — from data preprocessing, model building, and evaluation to web deployment
