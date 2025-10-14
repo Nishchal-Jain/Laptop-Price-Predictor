@@ -1,10 +1,14 @@
 import streamlit as st
 import pickle
 import numpy as np
+import pandas as pd
+from pathlib import Path
 
 # import the model
-pipe = pickle.load(open('pipe.pkl','rb'))
-df = pickle.load(open('df.pkl','rb'))
+BASE_DIR = Path(__file__).resolve().parent
+
+pipe = pickle.load(open(BASE_DIR / 'pipe.pkl','rb'))
+df = pickle.load(open(BASE_DIR / 'df.pkl','rb'))
 
 st.title("Laptop Predictor")
 
@@ -43,6 +47,8 @@ gpu = st.selectbox('GPU',df['Gpu brand'].unique())
 
 os = st.selectbox('OS',df['os'].unique())
 
+feature_columns = ['Company', 'TypeName', 'Ram', 'Weight', 'Touchscreen', 'IPS', 'ppi', 'Cpu brand', 'HDD', 'SSD', 'Gpu brand', 'os']
+
 if st.button('Predict Price'):
     # query
     ppi = None
@@ -59,8 +65,23 @@ if st.button('Predict Price'):
     X_res = int(resolution.split('x')[0])
     Y_res = int(resolution.split('x')[1])
     ppi = ((X_res**2) + (Y_res**2))**0.5/screen_size
-    query = np.array([company,type,ram,weight,touchscreen,ips,ppi,cpu,hdd,ssd,gpu,os])
+    query = pd.DataFrame([
+        {
+            'Company': company,
+            'TypeName': type,
+            'Ram': ram,
+            'Weight': weight,
+            'Touchscreen': touchscreen,
+            'IPS': ips,
+            'ppi': ppi,
+            'Cpu brand': cpu,
+            'HDD': hdd,
+            'SSD': ssd,
+            'Gpu brand': gpu,
+            'os': os,
+        }
+    ])
 
-    query = query.reshape(1,12)
+    query = query[feature_columns]
     st.title("The predicted price of this configuration is " + str(int(np.exp(pipe.predict(query)[0]))))
 
